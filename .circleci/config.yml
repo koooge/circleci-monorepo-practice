@@ -37,7 +37,7 @@ commands:
       - run:
           name: is changed and is not master
           command: |
-            if [ "${CIRCLECI_BRANCH}" != "master" ]; then
+            if [ "${CIRCLE_BRANCH}" != "master" ]; then
               git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative << parameters.dir >>
               if [ $? -eq 0 ]; then circleci step halt; fi
             fi
