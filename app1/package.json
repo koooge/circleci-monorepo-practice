@@ -1,0 +1,23 @@
+{
+  "name": "circleci-monorepo-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koooge/circleci-monorepo-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koooge/circleci-monorepo-practice/issues"
+  },
+  "homepage": "https://github.com/koooge/circleci-monorepo-practice#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0"
+  }
+}
