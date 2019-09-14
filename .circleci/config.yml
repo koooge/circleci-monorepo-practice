@@ -13,17 +13,21 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: |
-        cd app1
-        npm ci
-        npm run lint
+      - run:
+          name: lint app1
+          command: |
+            cd app1
+            npm ci
+            npm run lint
   lint_app2:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
     steps:
       - checkout
-      - run: |
-        npm app2
-        npm ci
-        npm run lint
+      - run:
+          name: lint app2
+          command: |
+            cd app2
+            npm ci
+            npm run lint
