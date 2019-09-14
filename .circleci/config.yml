@@ -13,35 +13,37 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: is changed and is not master
-          command: |
-            if [ "${CIRCLECI_BRANCH}" != "master" ]; then
-              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app1/'
-              if [ $? -eq 0 ]; then circleci step halt; fi
-            fi
-      - run:
-          name: lint app1
-          command: |
-            cd app1
-            npm ci
-            npm run lint
+      - npm_script:
+          dir: "~/repo/app1/"
+          command: "lint"
   lint_app2:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
     steps:
       - checkout
+      - npm_script:
+          dir: "~/repo/app2/"
+          command: "lint"
+
+commands:
+  npm_script:
+    parameters:
+      dir:
+        type: string
+      command:
+        type: string
+    steps:
       - run:
           name: is changed and is not master
           command: |
             if [ "${CIRCLECI_BRANCH}" != "master" ]; then
-              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app2/'
+              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative << parameters.dir >>
               if [ $? -eq 0 ]; then circleci step halt; fi
             fi
       - run:
-          name: lint app2
+          name: npm run << parameters.command >>
+          working_directory: << parameters.dir >>
           command: |
-            cd app2
             npm ci
-            npm run lint
+            npm run << parameters.command >>
