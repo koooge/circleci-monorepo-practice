@@ -38,8 +38,8 @@ commands:
           name: is changed and is not master
           command: |
             if [ "${CIRCLE_BRANCH}" != "master" ]; then
-              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative << parameters.dir >>
-              if [ $? -eq 0 ]; then circleci step halt; fi
+              DIFF_FILES=$(git diff ${CIRCLE_BRANCH} origin/master --name-only --relative << parameters.dir >>)
+              if [ ${#DIFF_FILES[@]} -eq 0 ]; then circleci step halt; fi
             fi
       - run:
           name: npm run << parameters.command >>
