@@ -14,10 +14,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: is changed
+          name: is changed and is not master
           command: |
-            git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app1/'
-            if [ $? -eq 0 ]; then circleci step halt; fi
+            if [ "${CIRCLECI_BRANCH}" != "master" ]; then
+              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app1/'
+              if [ $? -eq 0 ]; then circleci step halt; fi
+            fi
       - run:
           name: lint app1
           command: |
@@ -31,10 +33,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: is changed
+          name: is changed and is not master
           command: |
-            git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app2/'
-            if [ $? -eq 0 ]; then circleci step halt; fi
+            if [ "${CIRCLECI_BRANCH}" != "master" ]; then
+              git diff ${CIRCLE_BRANCH} origin/master --exit-code --relative './app2/'
+              if [ $? -eq 0 ]; then circleci step halt; fi
+            fi
       - run:
           name: lint app2
           command: |
